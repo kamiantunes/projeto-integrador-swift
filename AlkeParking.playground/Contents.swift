@@ -1,5 +1,26 @@
+enum VehicleType {
+    case car
+    case bike
+    case microBus
+    case bus
+    
+    var fee: Int {
+        switch self {
+        case .car:
+            return 20
+        case .bike:
+            return 15
+        case .microBus:
+            return 25
+        case .bus:
+            return 30
+        }
+    }
+}
+
 struct Vehicle : Parkable, Hashable {
-    var plate: String
+    let plate: String
+    let type: VehicleType
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(plate.hashValue)
@@ -16,6 +37,7 @@ struct Parking {
 
 protocol Parkable {
     var plate: String { get }
+    var type: VehicleType { get }
 }
 
 let estacionamento: Parking = Parking()
