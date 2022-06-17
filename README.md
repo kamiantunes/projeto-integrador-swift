@@ -4,7 +4,7 @@ Projeto Integrador de Swift proposto pela Alkemy no IT Bootcamp.
 ## 📝 Descrição do projeto
 AlkeParking é um estacionamento que permite estacionar diversos tipos de veículos (carro, motocicleta, micro-ônibus e ônibus) com capacidade máxima de 20 veículos, além de calcular as tarifas e calcular os ganhos.
 
-## Desenvolvedores
+## 💻 Desenvolvedores
 * ___Douglas Yonemura___
 * ___Kamilla Antunes___
 
