@@ -27,7 +27,7 @@ struct Vehicle : Parkable, Hashable {
     let plate: String
     let type: VehicleType
     var checkInTime: Date
-    var discountCard: String?
+    let discountCard: String?
     var parkedTime: Int {
         get {
             Calendar.current.dateComponents([.minute], from: checkInTime, to: Date()).minute ?? 0
@@ -48,7 +48,6 @@ struct Parking {
     let maxVehicles = 20
     // Exercício 11
     var dataParking: (vehiclesRemoved: Int, earnings: Int) = (0,0)
-    let onFinish: (Bool) -> Void = {$0 ? print("Welcome to AlkeParking!") : print("Sorry, the check-in failed")}
 
     // Exercício 5
     mutating func checkInVehicle(_ vehicle: Vehicle, onFinish:(Bool) -> Void) {
@@ -74,7 +73,7 @@ struct Parking {
         vehicles.remove(vehicleRemove)
         dataParking.vehiclesRemoved += 1
 
-        let hasDiscountCard = vehicleRemove.discountCard == nil ? false : true
+        let hasDiscountCard = vehicleRemove.discountCard != nil ? true : false
 
         // Exercício 10
         let fee = calculateFee(vehicle: vehicleRemove, parkedTime: vehicleRemove.parkedTime, hasDiscountCard: hasDiscountCard)
@@ -144,20 +143,19 @@ var vehicles: [Vehicle] = [
     Vehicle(plate: "BB222GG", type: VehicleType.car, checkInTime: Date(), discountCard:nil)
 ]
 
-
+let onFinish: (Bool) -> Void = {$0 ? print("Welcome to AlkeParking!") : print("Sorry, the check-in failed")}
+let onSuccess: (Int) -> Void = {print("Your fee is $\($0). Come back soon")}
+let onError: () -> Void = {print("Sorry, the check-out failed")}
 
 // Exercício 6
 for vehicle in vehicles {
-    alkeParking.checkInVehicle(vehicle, onFinish: alkeParking.onFinish)
+    alkeParking.checkInVehicle(vehicle, onFinish: onFinish)
 }
 
 print("\n")
 alkeParking.listVehicles()
 
 print("\n")
-
-let onSuccess: (Int) -> Void = {print("Your fee is $\($0). Come back soon")}
-let onError: () -> Void = {print("Sorry, the check-out failed")}
 
 for vehicle in vehicles {
     alkeParking.checkOutVehicle(plate: vehicle.plate, onSuccess: onSuccess, onError: onError)
